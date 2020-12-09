@@ -240,7 +240,6 @@ class AFSIndividual:
         """
         # self.fitness = rbf_train.(self.vardim, self.chrom, self.bound)
         num, m = np.shape(C)
-        # print(get_result(self.chrom, C, delta, A, Y)[0])
         # print(self.chrom[:num])
         # print(arr_size(self.chrom[num:-num], m))
         # print(self.chrom[-num:])
@@ -488,6 +487,7 @@ class ArtificialFishSwarm:
 
         # 对当前鱼群进行评估
         for i in range(0, self.sizepop):
+
             self.evaluation(self.population[i], self.C, self.delta, self.A, self.Y)
 
             self.fitness[i] = self.population[i].fitness
@@ -499,7 +499,7 @@ class ArtificialFishSwarm:
         for each in range(self.sizepop):
             # 此处的粒子质量可能存在零
             # 因为我们这里定义的粒子不能存在无质量的粒子故在进行操作+ (1/np.e)
-            self.quality.append((self.fitness[each] - fitness_min + (1 / np.e)) / (fitness_max - fitness_min))
+            self.quality.append((self.fitness[each] - fitness_min + (1 / np.e)) / (fitness_max - fitness_min+ (1 / np.e)))
             sum0 += self.quality[each]
         for each1 in range(self.sizepop):
             self.quality[each1] = self.quality[each1] / sum0
@@ -540,12 +540,14 @@ class ArtificialFishSwarm:
                 # 以下为优化部分
                 fitness_min = np.max(self.fitness)
                 fitness_max = np.min(self.fitness)
+
             sum0 = 0
             # 根据粒子的适应度计算每个粒子的质量
             for each in range(self.sizepop):
                 # 此处的粒子质量可能存在零
                 # 因为我们这里定义的粒子不能存在无质量的粒子故在进行操作+ (1/np.e)
-                self.quality.append((self.fitness[each] - fitness_min + (1 / np.e)) / (fitness_max - fitness_min))
+
+                self.quality.append((self.fitness[each] - fitness_min + (1 / np.e)) / (fitness_max - fitness_min + (1 / np.e)))
                 sum0 += self.quality[each]
             for each1 in range(self.sizepop):
                 self.quality[each1] = self.quality[each1] / sum0
@@ -600,7 +602,8 @@ class ArtificialFishSwarm:
         for each in range(len(population_chrom)):
             # 此处的粒子质量可能存在零
             # 因为我们这里定义的粒子不能存在无质量的粒子故在进行操作+ (1/np.e)
-            quality_part.append((population_finess[each] - fitness_min + (1 / np.e)) / (fitness_max - fitness_min))
+
+            quality_part.append((population_finess[each] - fitness_min + (1 / np.e)) / (fitness_max - fitness_min+ (1 / np.e)))
             sum0 += quality_part[each]
         # for each1 in range(len(population_chrom)):
         #     quality_part[each1] = quality_part[each1] / sum0
@@ -954,7 +957,7 @@ class ArtificialFishSwarm_1:
         for each in range(len(population_chrom)):
             # 此处的粒子质量可能存在零
             # 因为我们这里定义的粒子不能存在无质量的粒子故在进行操作+ (1/np.e)
-            quality_part.append((population_finess[each] - fitness_min + (1 / np.e)) / (fitness_max - fitness_min))
+            quality_part.append((population_finess[each] - fitness_min + (1 / np.e)) / (fitness_max - fitness_min+ (1 / np.e)))
             sum0 += quality_part[each]
         # for each1 in range(len(population_chrom)):
         #     quality_part[each1] = quality_part[each1] / sum0
@@ -1018,12 +1021,16 @@ def arr_size(arr, size):
 def get_data_test(path, number_day=10, input_number=15):
     # path = "E:\\Document\\python\\deep_python\\Optimization_algorithm\\NET_work\\000017_.csv"
     # path = "E:\\Document\\python\\deep_python\\Optimization_algorithm\\NET_work\\data\\close\\000017.csv"
+    print(path)
     with open(path, 'r') as file:
         temp = csv.DictReader(file)
         data_dir1 = [row['close'] for row in temp]
+    print(data_dir1)
     with open(path, 'r') as file1:
         temp1 = csv.DictReader(file1)
-        data_dir2 = [row['volume'] for row in temp1]
+
+        # data_dir2 = [row['volume'] for row in temp1]
+        data_dir2 = [row['vol'] for row in temp1]
 
     # 定义使用前几天的数据来进行预测
     data_dir1.reverse()
@@ -1076,6 +1083,9 @@ def get_data():
 
 
 def get_result(w, C, delta, A, Y):
+    # print(len(w))
+    # print(np.shape(C))
+    # print(np.shape(A))
     n,   m = np.shape(A)
     hidden_out = []
     # 正向传播
@@ -1085,6 +1095,8 @@ def get_result(w, C, delta, A, Y):
             hidden_out_temp.append(
                 np.e ** (-1 * (np.linalg.norm(np.array(A[j]) - np.array(C[i])) ** 2) / (2 * delta[i] ** 2)))
         hidden_out.append(hidden_out_temp)
+    # print(len(hidden_out))
+    # print(len(np.mat(w).T))
     y_pre = np.mat(hidden_out) * np.mat(w).T
     errors = y_pre - np.mat(Y).T
     cost_ = 0
@@ -1127,7 +1139,7 @@ def evolve(low, high, A, Y, hidden_num, ratio, max_step,i):
     # 鱼群算法
     bound = np.tile([[-10], [10]], d)
     # 1,1改进的鱼群算法
-    afs_1 = ArtificialFishSwarm(60, d, bound, 50, [0.001, 0.0001, 0.618, 40], C1, delta1, A1, Y1)
+    afs_1 = ArtificialFishSwarm(5, d, bound, 50, [0.001, 0.01, 0.618, 10], C1, delta1, A1, Y1)
     w, C, delta = afs_1.solve()
 
     # 1,2鱼群算法
@@ -1290,7 +1302,10 @@ def main(dir, file_name):
 
 if __name__ == '__main__':
     # path_file = "E:\\Document\\python\\deep_python\\Optimization_algorithm\\NET_work\\data\\300730.csv"
-    path_file = "E:\\Document\\python\\deep_python\\Optimization_algorithm\\NET_work\\data\\close\\000017.csv"
+    # E:\\git\\RBF_AFSA_GSA\\data\\300730.SZ\\300730.SZ.csv
+    # path_file = "E:\\Document\\python\\deep_python\\Optimization_algorithm\\NET_work\\data\\close\\000017.csv"
+    path_file = "E:\\git\\RBF_AFSA_GSA\\data\\300730.SZ\\300730.SZ.csv"
+
     data_x, data_y, test_x, test_y = get_data_test(path_file)
 
     # for i in range(len(data_x)):
