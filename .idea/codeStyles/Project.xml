@@ -1,0 +1,17 @@
+<component name="ProjectCodeStyleConfiguration">
+  <code_scheme name="Project" version="173">
+    <Python>
+      <option name="SPACE_AFTER_PY_COLON" value="false" />
+      <option name="SPACE_AROUND_POWER_OPERATOR" value="false" />
+      <option name="SPACE_BEFORE_BACKSLASH" value="false" />
+      <option name="NEW_LINE_AFTER_COLON" value="true" />
+      <option name="USE_CONTINUATION_INDENT_FOR_ARGUMENTS" value="true" />
+      <option name="FROM_IMPORT_PARENTHESES_FORCE_IF_MULTILINE" value="true" />
+    </Python>
+    <codeStyleSettings language="Python">
+      <indentOptions>
+        <option name="SMART_TABS" value="true" />
+      </indentOptions>
+    </codeStyleSettings>
+  </code_scheme>
+</component>

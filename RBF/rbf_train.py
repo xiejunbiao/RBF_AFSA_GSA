@@ -242,7 +242,8 @@ class AFSIndividual:
         num, m = np.shape(C)
         # print(self.chrom[:num])
         # print(arr_size(self.chrom[num:-num], m))
-        # print(self.chrom[-num:])
+        print(self.chrom[-num:])
+        print(np.shape(self.chrom))
         self.fitness = 1/float(get_result(self.chrom[:num], arr_size(self.chrom[num:-num], m), self.chrom[-num:], A, Y)[1])
         # self.fitness = 1/float(get_result(self.chrom, C, delta, A, Y)[1])
 
@@ -487,6 +488,7 @@ class ArtificialFishSwarm:
 
         # 对当前鱼群进行评估
         for i in range(0, self.sizepop):
+            # print(self.delta)
 
             self.evaluation(self.population[i], self.C, self.delta, self.A, self.Y)
 
@@ -1091,7 +1093,10 @@ def get_result(w, C, delta, A, Y):
     # 正向传播
     for j in range(n):
         hidden_out_temp = []
+
         for i in range(len(C)):
+            # print(delta[i])
+            # print(np.e ** (-1 * (np.linalg.norm(np.array(A[j]) - np.array(C[i])) ** 2) / (2 * delta[i] ** 2)))
             hidden_out_temp.append(
                 np.e ** (-1 * (np.linalg.norm(np.array(A[j]) - np.array(C[i])) ** 2) / (2 * delta[i] ** 2)))
         hidden_out.append(hidden_out_temp)

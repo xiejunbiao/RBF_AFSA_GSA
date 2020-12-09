@@ -21,6 +21,7 @@ def get_stock(path_r, number, **time_):
     if time_:
         time_ = time_['time_']
         data = pro.daily(ts_code=number, start_date=time_['start_time'], end_date=time_['end_time'])
+        print(data)
         data.to_csv(path_r + '/%s.csv' % number)
     else:
         data = pro.daily(ts_code=number, start_date='20180102', end_date='20180307')
@@ -40,8 +41,8 @@ def get_concept_classified():
 
 def get_all_data(number_list, path_p):
     for stock in number_list.keys():
-        # path_t = path + "/%s" % i
-        path_t = os.path.join(path_p, stock)
+        path_t = path + "/%s" % stock
+        # path_t = os.path.join(path_p, stock)
         time_ = number_list[stock]
 
         check_dir_exist(path_t)
@@ -50,6 +51,7 @@ def get_all_data(number_list, path_p):
                 print('The time must be either all empty or all non-empty')
             if time_['start_time'] > time_['end_time']:
                 print('The start time mush is more litter than the end time')
+
             get_stock(path_t, stock, time_=time_)
         else:
             # time_ = None
@@ -59,9 +61,10 @@ def get_all_data(number_list, path_p):
 
 def check_dir_exist(dir_):
     # 坚持目录是否存在，不存在则创建
+    print(os.path.exists(dir_))
     if not os.path.exists(dir_):
+        print(dir_)
         os.mkdir(dir_)
-    print(dir_)
 
 
 if __name__ == '__main__':
@@ -70,10 +73,10 @@ if __name__ == '__main__':
                   '002628.SZ': '',
                   '300144.SZ': '',
                   '000017.SZ': '',
-                  '600519.SH': {'start_time': '20180101',
+                  '600519.SZ': {'start_time': '20180101',
                                 'end_time': '20180430'}}
     get_all_data(stock_list, path)
-
+    # check_dir_exist(os.path.join(path, "600519.SZ"))
     # '002628'
     # pro = ts.pro_api()
     #
