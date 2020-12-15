@@ -64,6 +64,7 @@ def get_data_test():
 
     # 定义使用前几天的数据来进行预测
     number_day = 10
+    # number_day = 20
     input_number = 15
     data_dir1.reverse()
     data_dir2.reverse()
@@ -111,11 +112,15 @@ def predict_num_day(number):
     result2 = [5.7874, 5.6751, 5.6634, 5.6354, 5.5038, 5.5064, 5.5762, 5.5645, 5.5234, 5.7063]
     result3 = [5.8561, 5.5953, 5.5456, 5.6926, 5.5494, 5.5743, 5.5574, 5.5456, 5.5549, 5.6671]
     result4 = [5.7480, 5.6059, 5.5354, 5.6065, 5.5242, 5.5864, 5.6497, 5.5585, 5.4983, 5.6228]
+    result5 = [5.9870, 5.6013, 5.6156, 5.5160, 5.4445, 5.4866, 5.5793, 5.5273, 5.5677, 5.5636]
+    result6 = [5.9847, 5.6296, 5.5584, 5.5839, 5.5370, 5.6073, 5.6701, 5.4369, 5.6748, 5.5870]
     # p = np.array(result) - np.array(test_y)
     p1 = np.array(result1) - np.array(test_y)
     p2 = np.array(result2) - np.array(test_y)
     p3 = np.array(result3) - np.array(test_y)
     p4 = np.array(result4) - np.array(test_y)
+    p5 = np.array(result5) - np.array(test_y)
+    p6 = np.array(result6) - np.array(test_y)
     cost1 = 0
     cost2 = 0
     cost2_1 = 0
