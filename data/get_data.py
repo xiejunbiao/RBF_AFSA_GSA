@@ -41,7 +41,7 @@ def get_concept_classified():
 
 def get_all_data(number_list, path_p):
     for stock in number_list.keys():
-        path_t = path + "/%s" % stock
+        path_t = path_p + "/%s" % stock
         # path_t = os.path.join(path_p, stock)
         time_ = number_list[stock]
 
