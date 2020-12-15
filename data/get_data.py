@@ -19,10 +19,11 @@ def get_stock(path_r, number, **time_):
     # data_L = pro.daily(ts_code='number', start_date='20180322', end_date='20180404')
     # return ts.get_hist_data(number, start='2018-01-12', end='2018-03-03')
     if time_:
-        time_ = time_['time_']
-        data = pro.daily(ts_code=number, start_date=time_['start_time'], end_date=time_['end_time'])
+        time_t = time_['time_']
+        data = pro.daily(ts_code=number, start_date=time_t['start_time'], end_date=time_t['end_time'])
         print(data)
-        data.to_csv(path_r + '/%s.csv' % number)
+        print(os.path.join(path_r, '%s.csv' % number))
+        data.to_csv(os.path.join(path_r, '%s.csv' % number))
     else:
         data = pro.daily(ts_code=number, start_date='20180102', end_date='20180307')
         data_test = pro.daily(ts_code=number, start_date='20190308', end_date='20180321')
@@ -41,7 +42,7 @@ def get_concept_classified():
 
 def get_all_data(number_list, path_p):
     for stock in number_list.keys():
-        path_t = path_p + "/%s" % stock
+        path_t = os.path.join(path_p, "/%s" % stock)
         # path_t = os.path.join(path_p, stock)
         time_ = number_list[stock]
 
@@ -55,30 +56,35 @@ def get_all_data(number_list, path_p):
             get_stock(path_t, stock, time_=time_)
         else:
             # time_ = None
-            # print(stock)
+            print(stock)
             get_stock(path_t, stock)
 
 
 def check_dir_exist(dir_):
     # 坚持目录是否存在，不存在则创建
-    print(os.path.exists(dir_))
+    # print(os.path.exists(dir_))
     if not os.path.exists(dir_):
-        print(dir_)
         os.mkdir(dir_)
 
 
 if __name__ == '__main__':
-    path = "E:\\Document\\python\\deep_python\\Optimization_algorithm\\NET_work\\data"
-    stock_list = {'300730.SZ': '',
-                  '002628.SZ': '',
-                  '300144.SZ': '',
-                  '000017.SZ': '',
-                  '600519.SZ': {'start_time': '20180101',
+    path = "E:\\document\\RBF_AFSA_GSA\\data"
+    stock_list = {'300730.SZ': {'start_time': '20180101',
+                                'end_time': '20180430'},
+                  '002628.SZ': {'start_time': '20180101',
+                                'end_time': '20180430'},
+                  '300144.SZ': {'start_time': '20180101',
+                                'end_time': '20180430'},
+                  '000017.SZ': {'start_time': '20180101',
+                                'end_time': '20180430'},
+                  '600519.SH': {'start_time': '20180101',
                                 'end_time': '20180430'}}
     get_all_data(stock_list, path)
     # check_dir_exist(os.path.join(path, "600519.SZ"))
     # '002628'
     # pro = ts.pro_api()
+    # data = pro.daily(ts_code='600519.SH', start_date='20180101', end_date='20180404')
+    # print(data['close'])
     #
     # # 查询当前所有正常上市交易的股票列表
     #
