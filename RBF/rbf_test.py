@@ -54,17 +54,20 @@ def save_predict(file_name, pre):
 
 def get_data_test():
     # path = "E:\\Document\\python\\deep_python\\Optimization_algorithm\\NET_work\\000017_.csv"
-    path = "E:\\Document\\python\\deep_python\\Optimization_algorithm\\NET_work\\data\\close\\000017.csv"
+    path_10 = "E:\\Document\\python\\deep_python\\Optimization_algorithm\\NET_work\\data\\close\\000017.csv"
+    # path = "E:\\Document\\python\\deep_python\\Optimization_algorithm\\NET_work\\data\\close\\000017.csv"
+    path = "E:\\git\\RBF_AFSA_GSA\\data\\000017.SZ\\000017.SZ.csv"
     with open(path, 'r') as file:
         temp = csv.DictReader(file)
         data_dir1 = [row['close'] for row in temp]
     with open(path, 'r') as file1:
         temp1 = csv.DictReader(file1)
-        data_dir2 = [row['volume'] for row in temp1]
+        # data_dir2 = [row['volume'] for row in temp1]
+        data_dir2 = [row['vol'] for row in temp1]
 
     # 定义使用前几天的数据来进行预测
-    number_day = 10
-    # number_day = 20
+    # number_day = 10
+    number_day = 20
     input_number = 15
     data_dir1.reverse()
     data_dir2.reverse()
@@ -99,6 +102,7 @@ def get_data_test():
 def predict_num_day(number):
     # result = []
     data_x, data_y, test_x, test_y = get_data_test()
+
     print('获取数据成功')
     # for i in range(number):
     #
@@ -107,13 +111,32 @@ def predict_num_day(number):
     #     result.append(get_predict(weight, center, delta, test_x[i]))
     # print(result)
     print(test_y)
-    # [5.99, 5.7, 5.56, 5.63, 5.52, 5.59, 5.59, 5.55, 5.52, 5.61]
+    # [5.99, 5.7, 5.56, 5.63, 5.52, 5.59, 5.59, 5.55, 5.52, 5.61, ==  5.54, 5.58, 5.61, 5.51, 5.45, 5.38, 5.25, 5.28, 5.27, 5.25]
+    result1 = [5.8763, 5.6454, 5.6456, 5.6567, 5.5134, 5.5764, 5.6341, 5.5457, 5.5049, 5.6321,
+               5.6102, 5.6001, 5.6117, 5.5502, 5.4119, 5.4128, 5.1937, 5.3072, 5.2661, 5.2684]
+
+    result2 = [5.7874, 5.6751, 5.6634, 5.6354, 5.5038, 5.5064, 5.5762, 5.5645, 5.5234, 5.7063,
+               5.5269, 5.4893, 5.6225, 5.5047, 5.5023, 5.4193, 5.2579, 5.3011, 5.2894, 5.2781]
+
+    result3 = [5.8561, 5.5953, 5.5456, 5.6926, 5.5494, 5.5743, 5.5574, 5.5456, 5.5549, 5.6671,
+               5.5229, 5.6192, 5.6074, 5.5528, 5.4566, 5.4418, 5.3026, 5.3033, 5.2651, 5.2538]
+
+    result4 = [5.7480, 5.6059, 5.5354, 5.6065, 5.5242, 5.5864, 5.6497, 5.5585, 5.4983, 5.6228,
+               5.5581, 5.6094, 5.6011, 5.5336, 5.4827, 5.4461, 5.2902, 5.3074, 5.3541, 5.2509]
+
+    result5 = [5.9870, 5.6013, 5.6156, 5.5160, 5.4445, 5.4866, 5.5793, 5.5273, 5.5677, 5.5636,
+               5.5039, 5.6367, 5.6011, 5.5284, 5.4588, 5.4091, 5.2871, 5.3271, 5.3758, 5.3961]
+
+    result6 = [5.9847, 5.6296, 5.5584, 5.5839, 5.5370, 5.6073, 5.6701, 5.4369, 5.6748, 5.5870,
+               5.5596, 5.6012, 5.6230, 5.5371, 5.5308, 5.4628, 5.3061, 5.3305, 5.3184, 5.2594]
+    """
     result1 = [5.8763, 5.6454, 5.6456, 5.6567, 5.5134, 5.5764, 5.6341, 5.5457, 5.5049, 5.6321]
     result2 = [5.7874, 5.6751, 5.6634, 5.6354, 5.5038, 5.5064, 5.5762, 5.5645, 5.5234, 5.7063]
     result3 = [5.8561, 5.5953, 5.5456, 5.6926, 5.5494, 5.5743, 5.5574, 5.5456, 5.5549, 5.6671]
     result4 = [5.7480, 5.6059, 5.5354, 5.6065, 5.5242, 5.5864, 5.6497, 5.5585, 5.4983, 5.6228]
     result5 = [5.9870, 5.6013, 5.6156, 5.5160, 5.4445, 5.4866, 5.5793, 5.5273, 5.5677, 5.5636]
     result6 = [5.9847, 5.6296, 5.5584, 5.5839, 5.5370, 5.6073, 5.6701, 5.4369, 5.6748, 5.5870]
+    """
     # p = np.array(result) - np.array(test_y)
     p1 = np.array(result1) - np.array(test_y)
     p2 = np.array(result2) - np.array(test_y)
@@ -134,6 +157,12 @@ def predict_num_day(number):
 
     cost5_1 = 0
     cost5_2 = 0
+
+    cost6_1 = 0
+    cost6_2 = 0
+
+    cost7_1 = 0
+    cost7_2 = 0
 
     print('预测结果')
     # for i in range(len(result)):
@@ -157,10 +186,19 @@ def predict_num_day(number):
         cost4_2 += np.abs(p3[i]/test_y[i])
         print(np.abs(p3[i]/test_y[i]) * 100)
     print('--------------------------')
-    for i in range(len(result1)):
+    for i in range(len_data):
         cost5_1 += (p4[i] ** 2)
         cost5_2 += np.abs(p4[i]/test_y[i])
         print(np.abs(p4[i]/test_y[i]) * 100)
+    for i in range(len_data):
+        cost6_1 += (p5[i] ** 2)
+        cost6_2 += np.abs(p5[i]/test_y[i])
+        print(np.abs(p5[i]/test_y[i]) * 100)
+
+    for i in range(len(result1)):
+        cost7_1 += (p6[i] ** 2)
+        cost7_2 += np.abs(p6[i]/test_y[i])
+        print(np.abs(p6[i]/test_y[i]) * 100)
     print("GSA+AFSA+RBF:RMSE\t=" + '\t%f' % (cost2_1/len_data)**(1/2))
     print("GSA+AFSA+RBF:MRE\t=" + '\t%f' % (cost2_2/len_data))
     print("GSA+RBF:RMSE\t=" + '\t%f' % (cost3_1 / len_data) ** (1 / 2))
@@ -169,6 +207,10 @@ def predict_num_day(number):
     print("AFSA+RBF:MRE\t=" + '\t%f' % (cost4_2 / len_data))
     print("RBF:RMSE\t=" + '\t%f' % (cost5_1 / len_data) ** (1 / 2))
     print("RBF:MRE\t=" + '\t%f' % (cost5_2 / len_data))
+    print("ARIMS:RMSE\t=" + '\t%f' % (cost6_1 / len_data)**(1 / 2))
+    print("ARIMS:MRE\t=" + '\t%f' % (cost6_2 / len_data))
+    print("LSTM:RMSE\t=" + '\t%f' % (cost7_1 / len_data)**(1 / 2))
+    print("LSTM:MRE\t=" + '\t%f' % (cost7_2 / len_data))
     dates = ('3/22',
              '3/23',
              '3/26',
@@ -178,10 +220,21 @@ def predict_num_day(number):
              '3/30',
              '4/02',
              '4/03',
-             '4/04')
-    size = 12+2
+             '4/04',
+             '4/09',
+             '4/10',
+             '4/11',
+             '4/12',
+             '4/13',
+             '4/16',
+             '4/17',
+             '4/18',
+             '4/19',
+             '4/20'
+             )
+    size = 6
     plt.clf()
-    plt.xticks(np.arange(10), dates, rotation=0, fontsize=size)
+    plt.xticks(np.arange(20), dates, rotation=0, fontsize=size)
     plt.yticks(fontsize=size)
     plt.plot(test_y, 'k-')
     # plt.plot(result1, 'ro--')
