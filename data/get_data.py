@@ -78,6 +78,8 @@ if __name__ == '__main__':
                   '000017.SZ': {'start_time': '20180101',
                                 'end_time': '20180430'},
                   '600519.SH': {'start_time': '20180101',
+                                'end_time': '20180430'},
+                  '603991.SH': {'start_time': '20180101',
                                 'end_time': '20180430'}}
     get_all_data(stock_list, path)
     # check_dir_exist(os.path.join(path, "600519.SZ"))

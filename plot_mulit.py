@@ -1,6 +1,7 @@
 import matplotlib.pylab as plt
 import pandas as pd
 import numpy as np
+from data.get_data_20 import main_get_data
 
 
 pd.set_option('display.float_format', lambda x1: '%.6f' % x1)  # pandas
@@ -125,7 +126,7 @@ def plot_1(name_list, num_list, num, type_):
         num_list = [n * 100 for n in num_list]
     else:
         type_n = 'RMSE'
-        # num_list = [n * 10 for n in num_list]
+    # num_list = [n * 10 for n in num_list]
     type_n = num + '-' + type_n
 
     # name_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
@@ -327,9 +328,6 @@ def get_result(path):
     def get_mre(data_o, data_f):
         return (abs(data_f - data_o)/data_o).sum()/(data_o.shape[0])
 
-    def get_rrmse(data_o, data_f):
-        return (abs(data_f - data_o)/data_o).sum()/(data_o.shape[0])
-
     def get_rmse(data_o, data_f):
 
         return np.sqrt(((data_f - data_o)*(data_f - data_o)).sum()/(data_o.shape[0]))
@@ -340,9 +338,9 @@ def get_result(path):
     def plot_mae_mrse(data_list, lable_list, type_):
 
         plt.plot(data_list[0], 'k-')
-        plt.plot(data_list[1], 'k-.')
-        plt.plot(data_list[2], 'k:')
-        plt.plot(data_list[3], 'k--')
+        # plt.plot(data_list[1], 'k-.')
+        # plt.plot(data_list[2], 'k:')
+        # plt.plot(data_list[3], 'k--')
         size = 12
         plt.legend(lable_list, fontsize=size + 5)
         # plt.legend(lable_list, fontsize=size + 5, loc='upper right')
@@ -368,7 +366,10 @@ def get_result(path):
     """
     创业板股票：科创信息（300730）、宋城演艺（300144）；中小板股票：成都路桥（002628））
     """
-    label = ['000017', '300730', '002628', '300144']
+    # label = ['000017', '300730', '002628', '300144']
+    label = ['000017', '600519', '300730', '603991']
+
+    # label = ['000017']
     # num_list = ['002628']
     rmse_list, mre_list = [], []
     for each_num in label:
@@ -377,8 +378,10 @@ def get_result(path):
         mre_list.append(mre_tmp)
         # print(rmse_list)
         # print(mre_list)
-    label = ['深中华(000017)', '科创信息(300730)', '成都路桥(002628)', '宋城演艺(300144)']
-
+    # label = ['深中华(000017)', '科创信息(300730)', '成都路桥(002628)', '宋城演艺(300144)']
+    label = ['深中华(000017)', '贵州茅台(600519)', '科创信息(300730)', '至正股份(603991)']
+    # print(mre_list[0])
+    # print(mre_list[1])
     plot_2(txt, rmse_list, label)
     plot_2(txt, mre_list, label)
     # plot_mae_mrse(mre_list, label, 'MRE')
@@ -387,7 +390,12 @@ def get_result(path):
 
 
 if __name__ == '__main__':
-    path_r = 'E:\\Document\\python\\deep_python\\Optimization_algorithm\\NET_work\\预测结果过表.csv'
+    # path_r = 'E:\\Document\\python\\deep_python\\Optimization_algorithm\\NET_work\\预测结果过表.csv'
+    path_r = 'E:\\git\\RBF_AFSA_GSA\\data\\result_data.csv'
+
+    # 保存数据
+    # main_get_data(path_r)
+
     print('__________11111111111111____________')
     get_result(path_r)
     # plot_1()

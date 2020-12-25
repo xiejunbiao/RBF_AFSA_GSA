@@ -107,7 +107,8 @@ def data_predict(model_result, start_time, end_time):
 
 
 if __name__ == '__main__':
-    file_path = 'E:\\Document\\python\\deep_python\\Optimization_algorithm\\NET_work\\data\\300730.csv'
+    # file_path = 'E:\\Document\\python\\deep_python\\Optimization_algorithm\\NET_work\\data\\300730.csv'
+    file_path = 'E:\\git\\RBF_AFSA_GSA\\data\\600519.SH\\600519.SH.csv'
     data_o = get_data(file_path)
     data_train, data_test = splite_data(data_o)
 

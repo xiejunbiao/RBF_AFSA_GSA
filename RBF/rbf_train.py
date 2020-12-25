@@ -1027,12 +1027,12 @@ def get_data_test(path, number_day=10, input_number=15):
     with open(path, 'r') as file:
         temp = csv.DictReader(file)
         data_dir1 = [row['close'] for row in temp]
-    print(data_dir1)
+    # print(data_dir1)
     with open(path, 'r') as file1:
         temp1 = csv.DictReader(file1)
 
-        # data_dir2 = [row['volume'] for row in temp1]
-        data_dir2 = [row['vol'] for row in temp1]
+        data_dir2 = [row['volume'] for row in temp1]
+        # data_dir2 = [row['vol'] for row in temp1]
 
     # 定义使用前几天的数据来进行预测
     data_dir1.reverse()

@@ -111,24 +111,26 @@ def predict_num_day(number):
     #     result.append(get_predict(weight, center, delta, test_x[i]))
     # print(result)
     print(test_y)
-    # [5.99, 5.7, 5.56, 5.63, 5.52, 5.59, 5.59, 5.55, 5.52, 5.61, ==  5.54, 5.58, 5.61, 5.51, 5.45, 5.38, 5.25, 5.28, 5.27, 5.25]
-    result1 = [5.8763, 5.6454, 5.6456, 5.6567, 5.5134, 5.5764, 5.6341, 5.5457, 5.5049, 5.6321,
-               5.6102, 5.6001, 5.6117, 5.5502, 5.4119, 5.4128, 5.1937, 5.3072, 5.2661, 5.2684]
+    # [         5.99,   5.7,    5.56,   5.63,   5.52,   5.59,   5.59,   5.55,   5.52,   5.61, ==  5.54, 5.58, 5.61, 5.51, 5.45, 5.38, 5.25, 5.28, 5.27, 5.25]
+    result1 = [5.8763, 5.6454, 5.6456, 5.6367, 5.5234, 5.5964, 5.5941, 5.5557, 5.5249, 5.6321,
+               5.5302, 5.3201, 5.6196, 5.5183, 5.4319, 5.4028, 5.2637, 5.2772, 5.2761, 5.2484]
 
-    result2 = [5.7874, 5.6751, 5.6634, 5.6354, 5.5038, 5.5064, 5.5762, 5.5645, 5.5234, 5.7063,
-               5.5269, 5.4893, 5.6225, 5.5047, 5.5023, 5.4193, 5.2579, 5.3011, 5.2894, 5.2781]
 
-    result3 = [5.8561, 5.5953, 5.5456, 5.6926, 5.5494, 5.5743, 5.5574, 5.5456, 5.5549, 5.6671,
-               5.5229, 5.6192, 5.6074, 5.5528, 5.4566, 5.4418, 5.3026, 5.3033, 5.2651, 5.2538]
+    result2 = [5.8561, 5.5953, 5.5456, 5.6926, 5.5494, 5.5743, 5.5574, 5.5456, 5.5549, 5.6671,
+               5.5429, 5.8992, 5.6204, 5.5228, 5.4566, 5.3818, 5.2526, 5.2833, 5.2757, 5.2558]
 
+              # 5.54,    5.58,   5.61,   5.51,  5.45,   5.38,   5.25,   5.28,   5.27,   5.25
+    result3 = [5.7874, 5.6751, 5.6634, 5.6354, 5.5038, 5.5064, 5.5762, 5.5645, 5.5234, 5.7063,
+               5.5269, 5.7093, 5.7025, 5.6447, 5.4523, 5.3893, 5.2579, 5.2811, 5.2894, 5.2681]
+              # 5.54,    5.58,   5.61,   5.51,  5.45,   5.38,   5.25,   5.28,   5.27,   5.25
     result4 = [5.7480, 5.6059, 5.5354, 5.6065, 5.5242, 5.5864, 5.6497, 5.5585, 5.4983, 5.6228,
-               5.5581, 5.6094, 5.6011, 5.5336, 5.4827, 5.4461, 5.2902, 5.3074, 5.3541, 5.2509]
-
+               5.5481, 5.8994, 5.6911, 5.5136, 5.4627, 5.3761, 5.2602, 5.2774, 5.2541, 5.2609]
+              # 5.54,    5.58,   5.61,   5.51,  5.45,   5.38,   5.25,   5.28,   5.27,   5.25
     result5 = [5.9870, 5.6013, 5.6156, 5.5160, 5.4445, 5.4866, 5.5793, 5.5273, 5.5677, 5.5636,
-               5.5039, 5.6367, 5.6011, 5.5284, 5.4588, 5.4091, 5.2871, 5.3271, 5.3758, 5.3961]
-
+               5.5639, 5.8467, 5.7641, 5.5114, 5.4508, 5.3891, 5.2571, 5.3071, 5.3058, 5.3161]
+              # 5.54,    5.58,   5.61,   5.51,  5.45,   5.38,   5.25,   5.28,   5.27,   5.25
     result6 = [5.9847, 5.6296, 5.5584, 5.5839, 5.5370, 5.6073, 5.6701, 5.4369, 5.6748, 5.5870,
-               5.5596, 5.6012, 5.6230, 5.5371, 5.5308, 5.4628, 5.3061, 5.3305, 5.3184, 5.2594]
+               5.5596, 5.8812, 5.7030, 5.5171, 5.4508, 5.3828, 5.2561, 5.2905, 5.3084, 5.2594]
     """
     result1 = [5.8763, 5.6454, 5.6456, 5.6567, 5.5134, 5.5764, 5.6341, 5.5457, 5.5049, 5.6321]
     result2 = [5.7874, 5.6751, 5.6634, 5.6354, 5.5038, 5.5064, 5.5762, 5.5645, 5.5234, 5.7063]
@@ -142,6 +144,8 @@ def predict_num_day(number):
     p2 = np.array(result2) - np.array(test_y)
     p3 = np.array(result3) - np.array(test_y)
     p4 = np.array(result4) - np.array(test_y)
+    print(result5)
+    print(test_y)
     p5 = np.array(result5) - np.array(test_y)
     p6 = np.array(result6) - np.array(test_y)
     cost1 = 0
@@ -190,27 +194,34 @@ def predict_num_day(number):
         cost5_1 += (p4[i] ** 2)
         cost5_2 += np.abs(p4[i]/test_y[i])
         print(np.abs(p4[i]/test_y[i]) * 100)
+    print('--------------------------')
     for i in range(len_data):
         cost6_1 += (p5[i] ** 2)
         cost6_2 += np.abs(p5[i]/test_y[i])
+        if i in [9, 10, 11]:
+            print("------%s" % p5[i])
         print(np.abs(p5[i]/test_y[i]) * 100)
-
+    print('--------------------------')
     for i in range(len(result1)):
         cost7_1 += (p6[i] ** 2)
         cost7_2 += np.abs(p6[i]/test_y[i])
         print(np.abs(p6[i]/test_y[i]) * 100)
+    print("--------------RMSE------------")
     print("GSA+AFSA+RBF:RMSE\t=" + '\t%f' % (cost2_1/len_data)**(1/2))
-    print("GSA+AFSA+RBF:MRE\t=" + '\t%f' % (cost2_2/len_data))
-    print("GSA+RBF:RMSE\t=" + '\t%f' % (cost3_1 / len_data) ** (1 / 2))
-    print("GSA+RBF:MRE\t=" + '\t%f' % (cost3_2 / len_data))
-    print("AFSA+RBF:RMSE\t=" + '\t%f' % (cost4_1 / len_data) ** (1 / 2))
-    print("AFSA+RBF:MRE\t=" + '\t%f' % (cost4_2 / len_data))
+    print("AFSA+RBF:RMSE\t=" + '\t%f' % (cost3_1 / len_data) ** (1 / 2))
+    print("GSA+RBF:RMSE\t=" + '\t%f' % (cost4_1 / len_data) ** (1 / 2))
     print("RBF:RMSE\t=" + '\t%f' % (cost5_1 / len_data) ** (1 / 2))
-    print("RBF:MRE\t=" + '\t%f' % (cost5_2 / len_data))
     print("ARIMS:RMSE\t=" + '\t%f' % (cost6_1 / len_data)**(1 / 2))
-    print("ARIMS:MRE\t=" + '\t%f' % (cost6_2 / len_data))
     print("LSTM:RMSE\t=" + '\t%f' % (cost7_1 / len_data)**(1 / 2))
+    print("--------------MRE------------")
+    print("GSA+AFSA+RBF:MRE\t=" + '\t%f' % (cost2_2 / len_data))
+    print("AFSA+RBF:MRE\t=" + '\t%f' % (cost3_2 / len_data))
+    print("GSA+RBF:MRE\t=" + '\t%f' % (cost4_2 / len_data))
+    print("RBF:MRE\t=" + '\t%f' % (cost5_2 / len_data))
+    print("ARIMS:MRE\t=" + '\t%f' % (cost6_2 / len_data))
     print("LSTM:MRE\t=" + '\t%f' % (cost7_2 / len_data))
+
+
     dates = ('3/22',
              '3/23',
              '3/26',
@@ -230,9 +241,31 @@ def predict_num_day(number):
              '4/17',
              '4/18',
              '4/19',
-             '4/20'
-             )
+             '4/20')
     size = 6
+    txt = ['AFSA_GA_RBF', 'AFSA_RBF', 'GSA_RBF', 'RBF', 'ARIMA', 'LSTM']
+    plt.clf()
+    plt.bar(np.arange(6), [(cost2_1 / len_data)**(1 / 2),
+                           (cost3_1 / len_data)**(1 / 2),
+                           (cost4_1 / len_data)**(1 / 2),
+                           (cost5_1 / len_data)**(1 / 2),
+                           (cost6_1 / len_data)**(1 / 2),
+                           (cost7_1 / len_data)**(1 / 2)
+                           ], label=txt)
+
+    plt.show()
+
+    plt.clf()
+    plt.bar(np.arange(6), [cost2_2 / len_data,
+                           cost3_2 / len_data,
+                           cost4_2 / len_data,
+                           cost5_2 / len_data,
+                           cost6_2 / len_data,
+                           cost7_2 / len_data
+                           ], label=txt)
+
+    plt.show()
+
     plt.clf()
     plt.xticks(np.arange(20), dates, rotation=0, fontsize=size)
     plt.yticks(fontsize=size)
