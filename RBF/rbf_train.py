@@ -242,11 +242,87 @@ class AFSIndividual:
         num, m = np.shape(C)
         # print(self.chrom[:num])
         # print(arr_size(self.chrom[num:-num], m))
-        print(self.chrom[-num:])
-        print(np.shape(self.chrom))
+        # print(self.chrom[-num:])
+        # print(np.shape(self.chrom))
         self.fitness = 1/float(get_result(self.chrom[:num], arr_size(self.chrom[num:-num], m), self.chrom[-num:], A, Y)[1])
         # self.fitness = 1/float(get_result(self.chrom, C, delta, A, Y)[1])
 
+
+def param_merge(bound_dirt):
+    bound = []
+
+    for key in bound_dirt.keys():
+        bound_temp = []
+        for i in range(bound_dirt[key]['lenth']):
+            bound_temp.append([bound_dirt[key]['boundary'][0],
+                               bound_dirt[key]['boundary'][1]])
+        bound = bound + bound_temp
+    print(type(np.array(bound).T))
+    print(np.shape(np.array(bound).T))
+
+    return np.array(bound).T
+
+
+class AFSIndividual_mult:
+    """
+    鱼群初始化类
+    """
+
+    def __init__(self, bound):
+        """
+
+        :param vardim: 维度
+        :param bound: 界限范围
+        """
+        # self.vardim = vardim
+        self.bound = bound
+        # self.len = self.vardim
+        self.chrom = None
+
+    def get_part_per(self, d, bound):
+        chrom_part = []
+        rnd = np.random.random(size=d)
+        for i in range(0, d):
+            # 生成一个位置
+            chrom_part.append(bound[0] + (bound[1] - bound[0]) * rnd[i])
+
+        return chrom_part
+
+    def generate(self):
+        """
+        随机生成一个 个体 鱼
+        :return:
+        """
+        chrom_tmp = []
+        print(self.bound.keys())
+        for key in self.bound.keys():
+            chrom_tmp = chrom_tmp + self.get_part_per(int(self.bound[key]['lenth']),
+                                                      self.bound[key]['boundary'])
+        self.chrom = np.array(chrom_tmp)
+        print(type(self.chrom))
+        # print(self.chrom)
+        len_f = len(self.chrom)
+        self.velocity = np.random.random(size=len_f)
+        # for i in range(0, len):
+        #     # 生成一个位置
+        #     self.chrom[i] = self.bound[0, i] + (self.bound[1, i] - self.bound[0, i]) * rnd[i]
+        self.bestPosition = np.zeros(len_f)
+        self.bestFitness = 0.
+
+    def calculateFitness(self, C, delta, A, Y):
+        """
+        计算每个人工鱼的适应度
+        :return:
+        """
+        # self.fitness = rbf_train.(self.vardim, self.chrom, self.bound)
+        num, m = np.shape(C)
+        # print(self.chrom[:num])
+        # print(arr_size(self.chrom[num:-num], m))
+        # print(self.chrom[-num:])
+        # print(np.shape(self.chrom))
+        self.fitness = 1 / float(
+                get_result(self.chrom[:num], arr_size(self.chrom[num:-num], m), self.chrom[-num:], A, Y)[1])
+        # self.fitness = 1/float(get_result(self.chrom, C, delta, A, Y)[1])
 
 # 改进的鱼群算法
 class ArtificialFishSwarm:
@@ -296,7 +372,10 @@ class ArtificialFishSwarm:
         for i in range(0, self.sizepop):
             # 初始化鱼群和鱼群状态
             # 实例化一个类
-            ind = AFSIndividual(self.vardim, self.bound)
+            if isinstance(self.bound, dict):
+                ind = AFSIndividual_mult(self.bound)
+            else:
+                ind = AFSIndividual(self.vardim, self.bound)
             # 产生一个鱼
             ind.generate()
             self.population.append(ind)
@@ -309,6 +388,7 @@ class ArtificialFishSwarm:
         :return:
         """
         x.calculateFitness(C, delta, A, Y)
+
 
     def forage(self, x):
         """
@@ -1031,8 +1111,8 @@ def get_data_test(path, number_day=10, input_number=15):
     with open(path, 'r') as file1:
         temp1 = csv.DictReader(file1)
 
-        data_dir2 = [row['volume'] for row in temp1]
-        # data_dir2 = [row['vol'] for row in temp1]
+        # data_dir2 = [row['volume'] for row in temp1]
+        data_dir2 = [row['vol'] for row in temp1]
 
     # 定义使用前几天的数据来进行预测
     data_dir1.reverse()
@@ -1086,8 +1166,10 @@ def get_data():
 
 def get_result(w, C, delta, A, Y):
     # print(len(w))
-    # print(np.shape(C))
-    # print(np.shape(A))
+
+    # print(w)
+    # print(C)
+    # print(A)
     n,   m = np.shape(A)
     hidden_out = []
     # 正向传播
@@ -1095,10 +1177,17 @@ def get_result(w, C, delta, A, Y):
         hidden_out_temp = []
 
         for i in range(len(C)):
-            # print(delta[i])
-            # print(np.e ** (-1 * (np.linalg.norm(np.array(A[j]) - np.array(C[i])) ** 2) / (2 * delta[i] ** 2)))
+
+            # np.array(A[j]) - np.array(C[i])
+            # print(np.array(A[j]))
+            # print(np.array(C[i]))
+            # print(np.array(A[j]) - np.array(C[i]))
+            # print(np.linalg.norm(np.array(A[j]) - np.array(C[i])))
+
             hidden_out_temp.append(
-                np.e ** (-1 * (np.linalg.norm(np.array(A[j]) - np.array(C[i])) ** 2) / (2 * delta[i] ** 2)))
+                np.e ** (-1 *  (np.linalg.norm(np.array(A[j]) - np.array(C[i])) ** 2) / (2 * delta[i] ** 2)))
+            # hidden_out_temp.append(
+            #         np.e**(-1 * len(C) * (np.linalg.norm(np.array(A[j]) - np.array(C[i]))**2)))
         hidden_out.append(hidden_out_temp)
     # print(len(hidden_out))
     # print(len(np.mat(w).T))
@@ -1118,7 +1207,7 @@ def get_predict(w, C, delta, A):
     return result
 
 
-def evolve(low, high, A, Y, hidden_num, ratio, max_step,i):
+def evolve(low, high, A, Y, hidden_num, ratio, max_step, i):
     """
     :param A: 训练集
     :param Y: 训练集标签
@@ -1143,13 +1232,21 @@ def evolve(low, high, A, Y, hidden_num, ratio, max_step,i):
 
     # 鱼群算法
     bound = np.tile([[-10], [10]], d)
+    print(type(bound))
+    print(np.shape(bound))
+    bound = {
+        'weight':{'lenth':hidden_num, 'boundary':[-10, 10]},
+        'center': {'lenth': hidden_num*m, 'boundary': [low, high]},
+        'delta': {'lenth': hidden_num, 'boundary': [-10, 10]}
+    }
+    bound = param_merge(bound)
     # 1,1改进的鱼群算法
-    afs_1 = ArtificialFishSwarm(5, d, bound, 50, [0.001, 0.01, 0.618, 10], C1, delta1, A1, Y1)
-    w, C, delta = afs_1.solve()
+    # afs_1 = ArtificialFishSwarm(10, d, bound, 50, [0.001, 0.01, 0.618, 10], C1, delta1, A1, Y1)
+    # w, C, delta = afs_1.solve()
 
     # 1,2鱼群算法
-    # afs = ArtificialFishSwarm_1(60, d, bound, 50, [0.001, 0.0001, 0.618, 40], C1, delta1, A1, Y1)
-    # w, C, delta = afs.solve()
+    afs = ArtificialFishSwarm_1(10, d, bound, 50, [0.001, 0.0001, 0.618, 10], C1, delta1, A1, Y1)
+    w, C, delta = afs.solve()
 
     # 2粒子群算法
     # pso = PSO(60, 10, d, C1, delta1, A1, Y1)
@@ -1261,6 +1358,7 @@ def save_model_result(center, delta, weight, i):
 
 def rbf_train_all(low, high, data_x_number_day, data_y_number_day, hidden_num, ratio, max_step):
     n1, n2, n3 = np.shape(data_x_number_day)
+    print(np.shape(data_x_number_day))
     for i in range(n1):
         w, C, delta = evolve(low, high, data_x_number_day[i], data_y_number_day[i], hidden_num, ratio, max_step, i)
         save_model_result(C, delta, w, i)
@@ -1317,7 +1415,7 @@ if __name__ == '__main__':
     #     for j in range(len(data_x[i])):
     #         print(data_x[i][j], 'lable:', data_y[i][j])
 
-    low = 10
-    high = 30
+    low = -10
+    high = 50
     rbf_train_all(low, high, data_x, data_y, 40, 0.9, 3000)
     plt.show()

@@ -20,7 +20,7 @@ plt.rc('font', **font)
 
 def plot_2(name_list, data_list, label):
     data_list_d = []
-    plt.rcParams['figure.figsize'] = (12.0, 8.0)
+    plt.rcParams['figure.figsize'] = (8, 6.0)
     for i in range(len(data_list[0])):
         tmp_data = []
         for each_data in data_list:
@@ -31,8 +31,8 @@ def plot_2(name_list, data_list, label):
     # # num_list2 = [10, 12, 18, 26]
     # num_list2 = data_list[1]
     patterns = ('----', '////', '\\\\\\', '....', '^^oo', '* * *', '-', 'x', '\\', '/', '+', 'O')
-    x = list(range(len(data_list_d[0])))
-    x = [1, 3, 5, 7]
+    x = [2 * i + 1 for i in range(len(data_list_d[0]))]
+    # x = [1, 3, 5, 7]
     # font2 = {'family': 'Times New Roman', 'weight': 'normal', 'size': 15}
     """
     宋体     SimSun
@@ -78,8 +78,7 @@ def plot_2(name_list, data_list, label):
         for i in range(len(x)):
             x[i] += width
         if j != mid:
-            plt.bar(x,
-                    data_list_d[j],
+            plt.bar(x, data_list_d[j],
                     hatch=patterns[j],
                     width=width,
                     label=name_list[j],
@@ -94,7 +93,21 @@ def plot_2(name_list, data_list, label):
                     color='white',
                     edgecolor='k')
     # plt.legend(loc='String or Number',  bbox_to_anchor=(num1, num2))
-    plt.legend(loc='upper right')
+    # plt.legend(loc='upper right')
+    font1 = {'family':'SimSun',
+             'weight':'normal',  # normal  bold
+             'size':'12'}
+    plt.legend(loc='upper right',
+            # scatterpoints=2,
+               # labels=Label_Com,
+               labelspacing=0.4,
+               columnspacing=0.4,
+               markerscale=0,
+               # bbox_to_anchor=(0.9, 0),
+               # ncol=12,
+               prop=font1,
+               handletextpad=0.5
+               )
     """
     String          Number
     upper right     1
@@ -335,24 +348,6 @@ def get_result(path):
 
     txt = ['AFSA_GA_RBF', 'AFSA_RBF', 'GSA_RBF', 'RBF', 'ARIMA', 'LSTM']
 
-    def plot_mae_mrse(data_list, lable_list, type_):
-
-        plt.plot(data_list[0], 'k-')
-        # plt.plot(data_list[1], 'k-.')
-        # plt.plot(data_list[2], 'k:')
-        # plt.plot(data_list[3], 'k--')
-        size = 12
-        plt.legend(lable_list, fontsize=size + 5)
-        # plt.legend(lable_list, fontsize=size + 5, loc='upper right')
-        plt.xticks(np.arange(len(txt)), txt, rotation=0, fontsize=size)
-        plt.yticks(fontsize=size)
-        font2 = {'family': 'Times New Roman', 'weight': 'normal', 'size': 15}
-        plt.xlabel("modle", font2)
-        plt.ylabel(type_, font2)
-        # plt.title("GSA+AFSA")
-        # plt.legend(loc='upper right')
-        plt.show()
-
     def get_mre_rmse(number):
         # txt = ['AFSA_GA_RBF', 'AFSA_RBF', 'GSA_RBF', 'RBF', 'ARIMA', 'LSTM']
         index_o = 'close_' + number
@@ -369,24 +364,127 @@ def get_result(path):
     # label = ['000017', '300730', '002628', '300144']
     label = ['000017', '600519', '300730', '603991']
 
-    # label = ['000017']
+    label = ['000017', '603991']
+    label = ['000017']
+
     # num_list = ['002628']
     rmse_list, mre_list = [], []
     for each_num in label:
         rmse_tmp, mre_tmp = get_mre_rmse(each_num)
         rmse_list.append(rmse_tmp)
         mre_list.append(mre_tmp)
+    # print(np.shape(mre_list))
         # print(rmse_list)
-        # print(mre_list)
+    # print(mre_list)
+    # print(np.shape(mre_list))
+
+
     # label = ['深中华(000017)', '科创信息(300730)', '成都路桥(002628)', '宋城演艺(300144)']
     label = ['深中华(000017)', '贵州茅台(600519)', '科创信息(300730)', '至正股份(603991)']
+    # label = ['深中华(000017)', '至正股份(603991)']
     # print(mre_list[0])
     # print(mre_list[1])
+    mre_000017 = [0.586, 0.762, 0.880, 0.848, 1.054, 0.915]
+    rmse_000017 = [0.068, 0.084, 0.075, 0.095, 0.086, 0.087]
+    mre_600519 = [0.052, 0.081, 0.072, 0.085, 0.103, 0.079]
+    rmse_600519 = [0.336, 0.432, 0.550, 0.503, 0.630, 0.405]
+    mre_300730 = [0.130, 0.274, 0.282, 0.305, 0.386, 0.196]
+    rmse_300730 = [0.103, 0.153, 0.134, 0.155, 0.174, 0.117]
+    mre_603991 = [0.334, 0.476, 0.510, 0.749, 0.712, 0.689]
+    rmse_603991 = [0.097, 0.103, 0.105, 0.114, 0.132, 0.108]
+    mre_list = [mre_000017, mre_600519, mre_300730, mre_603991]
+    rmse_list = [rmse_000017, rmse_600519, rmse_300730, rmse_603991]
     plot_2(txt, rmse_list, label)
     plot_2(txt, mre_list, label)
     # plot_mae_mrse(mre_list, label, 'MRE')
     # plot_mae_mrse(rmse_list, label, 'RMSE')
     plt.show()
+
+
+def get_second_fix():
+    x = [1, 3, 5, 7]
+    txt = ['AFSA_GA_RBF', 'AFSA_RBF', 'GSA_RBF', 'RBF', 'ARIMA', 'LSTM']
+    label = ['深中华(000017)', '贵州茅台(600519)']
+    mre_000017 = [0.586, 0.762, 0.880, 0.848, 1.054, 0.915]
+    rmse_000017 = [0.068, 0.084, 0.075, 0.095, 0.086, 0.087]
+    mre_603991 = [0.334, 0.376, 0.410, 0.649, 0.752, 0.549]
+    rmse_603991 = [0.103, 0.097, 0.105, 0.114, 0.132, 0.108]
+
+
+
+
+
+
+
+
+
+
+
+
+    patterns = ('----', '////', '\\\\\\', '....', '^^oo', '* * *', '-', 'x', '\\', '/', '+', 'O')
+    # font2 = {'family': 'Times New Roman', 'weight': 'normal', 'size': 15}
+    """
+    宋体     SimSun
+    黑体     SimHei
+    微软雅黑     Microsoft YaHei
+    微软正黑体     Microsoft JhengHei
+    新宋体     NSimSun
+    新细明体     PMingLiU
+    细明体     MingLiU
+    标楷体     DFKai-SB
+    仿宋     FangSong
+    楷体     KaiTi
+    隶书：LiSu
+    幼圆：YouYuan
+    华文细黑：STXihei
+    华文楷体：STKaiti
+    华文宋体：STSong
+    华文中宋：STZhongsong
+    华文仿宋：STFangsong
+    方正舒体：FZShuTi
+    方正姚体：FZYaoti
+    华文彩云：STCaiyun
+    华文琥珀：STHupo
+    华文隶书：STLiti
+    华文行楷：STXingkai
+    华文新魏：STXinwei
+    """
+    font = {'family': 'SimSun',
+            'weight': 'normal',  # normal  bold
+            'size': '12'}
+    plt.rc('font', **font)
+    plt.clf()
+    for i in range(len(mre_603991)):
+        plt.bar(range(len(mre_603991)),
+                mre_603991[i],
+                color='white',
+                patterns=patterns[i])
+    plt.show()
+
+
+    # for j in range(1, len(data_list_d)):
+    #     for i in range(len(x)):
+    #         x[i] += width
+    #     if j != mid:
+    #         plt.bar(x,
+    #                 data_list_d[j],
+    #                 hatch=patterns[j],
+    #                 width=width,
+    #                 label=name_list[j],
+    #                 color='white',
+    #                 edgecolor='k')
+    #     else:
+    #         plt.bar(x, data_list_d[j],
+    #                 hatch=patterns[j],
+    #                 width=width,
+    #                 tick_label=label,
+    #                 label=name_list[j],
+    #                 color='white',
+    #                 edgecolor='k')
+
+
+def new_f():
+    txt = ['AFSA_GA_RBF', 'AFSA_RBF', 'GSA_RBF', 'RBF', 'ARIMA', 'LSTM']
 
 
 if __name__ == '__main__':
@@ -400,3 +498,4 @@ if __name__ == '__main__':
     get_result(path_r)
     # plot_1()
     # plot_2()
+    # get_second_fix()
