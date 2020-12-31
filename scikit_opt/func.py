@@ -55,6 +55,9 @@ class FuncSet(object):
             c = arr[i:i + size]
             s.append(c)
         return s
+    # Attribute
+    # reduction and optimization
+    # algorithm
 
 
 if __name__ == '__main__':
